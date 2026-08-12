@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12100E">
+<title>Foodline · Пульт додатків</title>
+<meta name="description" content="Секторна карта всіх виробничих і комерційних додатків Food Line Production.">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Пульт FL">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='3' fill='%2312100E'/><circle cx='16' cy='16' r='11' fill='none' stroke='%23E8A33D' stroke-width='1.4' stroke-dasharray='3 4'/><circle cx='16' cy='16' r='4' fill='%23E8A33D'/></svg>">
+<style>
+/* ================================================================
+   FOODLINE · ПУЛЬТ ДОДАТКІВ
+   Система взята з «Комерційного пульта», атмосфера — глибокий космос
+   ================================================================ */
+:root{
+  --void:#080706;
+  --bg:#12100E;
+  --panel:#191613;
+  --panel-2:#201C17;
+  --panel-3:#272219;
+  --line:#302A23;
+  --line-soft:#241F1A;
+
+  --ink:#EFE7D9;
+  --muted:#9C9083;
+  --dim:#6E655B;
+
+  --amber:#E8A33D;
+  --amber-dim:#8A6224;
+  --chili:#D9563F;
+  --wasabi:#86B860;
+  --indigo:#6F8FD0;
+  --plum:#B07AB4;
+  --teal:#55A99B;
+  --rose:#D98BA0;
+
+  --r:3px;
+  --rail:196px;
+
+  --f-display:"IBM Plex Sans Condensed",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:13px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--amber);text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--amber);color:#12100E}
+:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+
+*::-webkit-scrollbar{width:9px;height:9px}
+*::-webkit-scrollbar-track{background:var(--bg)}
+*::-webkit-scrollbar-thumb{background:#382F26;border-radius:6px}
+*::-webkit-scrollbar-thumb:hover{background:#4C4034}
+
+/* ================= АТМОСФЕРА ================= */
+#stars{
+  position:fixed;left:0;top:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;display:block;opacity:.62;
+}
+#nebula{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(720px 520px at 14% 8%,  rgba(232,163,61,.10), transparent 62%),
+    radial-gradient(620px 620px at 88% 22%, rgba(85,169,155,.075), transparent 64%),
+    radial-gradient(760px 500px at 62% 96%, rgba(111,143,208,.075), transparent 66%);
+  animation:breathe 26s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
+
+/* ================= ЗАПУСК ================= */
+#boot{
+  position:fixed;inset:0;z-index:999;background:var(--void);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  font-family:var(--f-mono);
+}
+#boot .ring{width:104px;height:104px;position:relative}
+#boot .ring i{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid transparent;border-top-color:var(--amber);
+  animation:spin 1.15s cubic-bezier(.5,0,.5,1) infinite;
+}
+#boot .ring i:nth-child(2){inset:13px;border-top-color:transparent;border-right-color:var(--teal);animation-duration:1.7s;animation-direction:reverse}
+#boot .ring i:nth-child(3){inset:26px;border-top-color:transparent;border-left-color:var(--indigo);animation-duration:2.3s}
+#boot .ring b{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:11px;letter-spacing:.2em;color:var(--amber);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#boot .lines{width:min(360px,80vw);font-size:10.5px;color:var(--dim);line-height:1.9}
+#boot .lines div{opacity:0;display:flex;gap:8px;animation:bootline .28s forwards}
+#boot .lines div span{margin-left:auto;color:var(--wasabi)}
+#boot .lines div:nth-child(1){animation-delay:.12s}
+#boot .lines div:nth-child(2){animation-delay:.34s}
+#boot .lines div:nth-child(3){animation-delay:.56s}
+#boot .lines div:nth-child(4){animation-delay:.78s}
+#boot .lines div:nth-child(5){animation-delay:1s}
+@keyframes bootline{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+#boot .bar{width:min(360px,80vw);height:2px;background:#241F19;overflow:hidden}
+#boot .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber-dim),var(--amber));animation:fill 1.35s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes fill{to{width:100%}}
+#boot.out{animation:bootout .5s forwards}
+@keyframes bootout{to{opacity:0;visibility:hidden;transform:scale(1.04)}}
+
+/* ================= ТОПБАР ================= */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:14px;
+  height:calc(46px + env(safe-area-inset-top,0px));
+  padding:env(safe-area-inset-top,0px) 14px 0;
+  background:linear-gradient(180deg,#1B1712,#151210);
+  border-bottom:1px solid var(--line);
+}
+.status.off .dot{background:var(--chili);box-shadow:0 0 6px rgba(217,86,63,.7)}
+
+/* сповіщення про нову версію пульта */
+.toast{
+  position:fixed;right:14px;bottom:14px;z-index:200;
+  display:none;align-items:center;gap:10px;
+  background:#100E0C;border:1px solid var(--line);border-radius:var(--r);
+  padding:9px 11px;box-shadow:0 10px 34px rgba(0,0,0,.65);
+  font-size:12px;color:var(--muted);
+  margin-bottom:env(safe-area-inset-bottom,0px);
+}
+.toast.show{display:flex}
+.toast b{color:var(--ink);font-weight:600}
+.mark{display:flex;align-items:baseline;gap:9px;font-family:var(--f-display);letter-spacing:.06em}
+.mark b{font-weight:600;font-size:15px;color:var(--ink)}
+.mark span{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.18em}
+.mark i{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--amber);margin-right:2px;animation:core 3.4s ease-in-out infinite;
+}
+@keyframes core{
+  0%,100%{box-shadow:0 0 0 3px rgba(232,163,61,.14)}
+  50%{box-shadow:0 0 0 6px rgba(232,163,61,.05),0 0 12px rgba(232,163,61,.5)}
+}
+.topbar .spacer{flex:1}
+.status{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--f-mono);font-size:10.5px;color:var(--muted);
+  padding:3px 9px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);
+  white-space:nowrap;
+}
+.status .dot{width:6px;height:6px;border-radius:50%;background:var(--wasabi);box-shadow:0 0 6px rgba(134,184,96,.7)}
+.btn{
+  background:var(--panel-2);border:1px solid var(--line);color:var(--ink);
+  padding:5px 11px;border-radius:var(--r);
+  font-family:var(--f-display);letter-spacing:.03em;
+  transition:background .12s,border-color .12s;position:relative;overflow:hidden;
+}
+.btn:hover{background:var(--panel-3);border-color:#453B2E}
+.btn.sm{padding:3px 8px;font-size:11px}
+.btn.on{background:var(--amber);color:#17130D;border-color:var(--amber);font-weight:600}
+
+/* ================= ШЕЛЛ ================= */
+.shell{display:flex;min-height:calc(100vh - 46px);position:relative;z-index:1}
+
+.rail{
+  width:var(--rail);flex:0 0 var(--rail);
+  border-right:1px solid var(--line);
+  background:rgba(21,18,16,.82);backdrop-filter:blur(6px);padding:10px 0;
+  position:sticky;
+  top:calc(46px + env(safe-area-inset-top,0px));
+  height:calc(100vh - 46px - env(safe-area-inset-top,0px));
+  overflow:auto;
+}
+.rail .grp{
+  font-family:var(--f-display);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);padding:14px 14px 5px;
+}
+.rail a{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 14px;color:var(--muted);border-left:2px solid transparent;
+  font-size:12.5px;cursor:pointer;position:relative;
+  transition:color .16s,background .16s,padding-left .16s;
+}
+.rail a:hover{color:var(--ink);background:#1B1713;padding-left:17px}
+.rail a.on{color:var(--ink);border-left-color:var(--amber);background:#1E1913}
+.rail a .n{font-family:var(--f-mono);font-size:9.5px;color:var(--dim);margin-left:auto}
+.rail a.on .n{color:var(--amber)}
+.rail a .zd{width:7px;height:7px;border-radius:50%;flex:none;background:currentColor;opacity:.85}
+.rail a.on::after{
+  content:"";position:absolute;right:6px;top:50%;width:3px;height:3px;border-radius:50%;
+  background:var(--amber);transform:translateY(-50%);animation:blip 2.2s ease-in-out infinite;
+}
+@keyframes blip{0%,100%{opacity:.25;box-shadow:none}50%{opacity:1;box-shadow:0 0 7px var(--amber)}}
+
+.main{flex:1;min-width:0;padding:0 0 60px}
+
+/* ================= ФІЛЬТРИ ================= */
+.filters{
+  position:sticky;top:calc(46px + env(safe-area-inset-top,0px));z-index:50;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  padding:9px 14px;background:rgba(22,19,15,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.srch{position:relative;flex:1 1 260px;max-width:360px}
+.srch input{
+  width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:5px 34px 5px 28px;color:var(--ink);font-family:inherit;font-size:12px;
+}
+.srch input::placeholder{color:var(--dim)}
+.srch input:focus{outline:none;border-color:var(--amber)}
+.srch .ic{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);display:flex;pointer-events:none}
+.srch .kb{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:2px;padding:0 5px;pointer-events:none}
+.srch input:focus ~ .kb{opacity:0}
+.flab{font-family:var(--f-display);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.chip{
+  padding:3px 9px;border:1px solid var(--line);border-radius:20px;
+  background:var(--panel);color:var(--muted);font-size:11.5px;
+  transition:border-color .14s,color .14s,background .14s;
+}
+.chip:hover{border-color:#453B2E;color:var(--ink)}
+.chip.on{background:var(--amber);color:#17130D;border-color:var(--amber);font-weight:600}
+
+/* ================= КАРТКИ ================= */
+.wrap{padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px))}
+.card{
+  background:rgba(25,22,19,.86);border:1px solid var(--line);border-radius:var(--r);
+  display:flex;flex-direction:column;min-width:0;
+  animation:rise .44s cubic-bezier(.22,.8,.3,1) backwards;
+}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.card > h3{
+  margin:0;padding:8px 12px;border-bottom:1px solid var(--line-soft);
+  font-family:var(--f-display);font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+}
+.card > h3 .hint{
+  margin-left:auto;font-family:var(--f-body);font-size:10.5px;letter-spacing:0;
+  text-transform:none;color:var(--dim);font-weight:400;
+}
+.card > h3::after{
+  content:"";position:absolute;left:-40%;bottom:0;width:40%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  animation:hsweep 7s linear infinite;opacity:.5;
+}
+@keyframes hsweep{to{left:110%}}
+.card .body{padding:12px;min-width:0}
+
+/* ================= ПОКАЗНИКИ ================= */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;margin-bottom:12px}
+.kpi{
+  background:rgba(25,22,19,.86);border:1px solid var(--line);border-radius:var(--r);
+  padding:10px 12px;position:relative;overflow:hidden;
+  animation:rise .44s cubic-bezier(.22,.8,.3,1) backwards;
+}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber-dim)}
+.kpi:nth-child(2)::before{background:var(--wasabi)}
+.kpi:nth-child(3)::before{background:var(--teal)}
+.kpi:nth-child(4)::before{background:var(--dim)}
+.kpi .k{font-family:var(--f-display);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.kpi .v{font-family:var(--f-mono);font-size:21px;font-weight:500;letter-spacing:-.01em}
+.kpi .s{font-size:10.5px;color:var(--dim);margin-top:2px}
+.kpi::after{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--amber),transparent);
+  opacity:0;animation:kpiscan 4.5s ease-in-out infinite;
+}
+.kpi:nth-child(even)::after{animation-delay:1.4s}
+@keyframes kpiscan{0%,72%,100%{opacity:0;transform:translateY(-100%)}80%{opacity:.9}92%{opacity:0;transform:translateY(100%)}}
+
+/* ================= СЕКТОРНА КАРТА ================= */
+.mapcard{margin-bottom:12px}
+.mapbox{position:relative;padding:6px 12px 12px;display:flex;justify-content:center}
+.mapbox svg{width:100%;max-width:620px;height:auto;display:block;overflow:visible}
+
+.sector{cursor:pointer;transition:fill-opacity .18s}
+.sector:hover{fill-opacity:.13}
+.sector.on{fill-opacity:.16}
+.slabel{
+  font-family:var(--f-display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  fill:var(--muted);cursor:pointer;transition:fill .18s;
+}
+.slabel:hover,.slabel.on{fill:var(--ink)}
+.scount{font-family:var(--f-mono);font-size:9px;fill:var(--dim)}
+.guide{fill:none;stroke:#2A241D;stroke-width:1;stroke-dasharray:2 5}
+.spoke{stroke:#2A241D;stroke-width:1}
+.sweep{transform-origin:300px 300px;animation:radar 11s linear infinite}
+@keyframes radar{to{transform:rotate(360deg)}}
+
+.pt{cursor:pointer;transition:opacity .22s,transform .16s}
+.pt circle.hit{fill:transparent}
+.pt:hover .core{r:6.5}
+.pt.mute{opacity:.13;pointer-events:none}
+.pt.hitq .halo{opacity:1}
+.pt .halo{opacity:0;transition:opacity .2s}
+
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translate(-50%,-100%);
+  background:#100E0C;border:1px solid var(--line);border-radius:var(--r);
+  padding:6px 9px;min-width:150px;max-width:230px;
+  box-shadow:0 8px 26px rgba(0,0,0,.6);transition:opacity .14s;
+}
+.tip.show{opacity:1}
+.tip b{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.tip i{display:block;font-style:normal;font-size:10.5px;color:var(--muted);line-height:1.4}
+.tip u{display:block;text-decoration:none;font-family:var(--f-mono);font-size:9.5px;color:var(--dim);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+
+.maplegend{
+  display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;
+  padding:9px 12px;border-top:1px solid var(--line-soft);
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);
+}
+.maplegend span{display:flex;align-items:center;gap:6px}
+.maplegend svg{width:13px;height:13px;overflow:visible;max-width:none}
+
+/* ================= ПЛАТИ ДОДАТКІВ ================= */
+.sect{display:flex;align-items:center;gap:12px;margin:22px 0 10px}
+.sect h2{
+  margin:0;font-family:var(--f-display);font-size:11px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;
+}
+.sect .rule{flex:1;height:1px;background:var(--line-soft)}
+.sect .n{font-family:var(--f-mono);font-size:10.5px;color:var(--dim)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:10px}
+
+.node{
+  position:relative;overflow:hidden;
+  background:rgba(25,22,19,.86);border:1px solid var(--line);border-radius:var(--r);
+  padding:10px 12px 9px 14px;
+  display:flex;flex-direction:column;gap:6px;min-height:104px;
+  transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+  animation:rise .4s cubic-bezier(.22,.8,.3,1) backwards;
+}
+.node::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--zc,var(--amber-dim))}
+.node:hover{
+  border-color:#453B2E;background:rgba(32,28,23,.92);transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.45), 0 0 0 1px rgba(232,163,61,.07);
+}
+.node__t{display:flex;align-items:flex-start;gap:8px}
+.node__t h4{margin:0;font-size:13.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.node .st{width:7px;height:7px;border-radius:50%;flex:none;margin-top:5px;background:var(--zc,var(--amber))}
+.node .st.doc{background:transparent;border:1.5px solid var(--zc,var(--amber))}
+.node .st.test{width:5px;height:5px;margin-top:6px;background:var(--muted)}
+.node .st.arch{background:var(--dim);opacity:.5}
+.node p{margin:0;font-size:11.5px;line-height:1.5;color:var(--muted);flex:1}
+.node__f{
+  display:flex;align-items:center;gap:8px;padding-top:7px;
+  border-top:1px solid var(--line-soft);
+  font-family:var(--f-mono);font-size:9.5px;color:var(--dim);letter-spacing:.03em;
+}
+.node__f .rp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:54%;position:relative;z-index:2;color:var(--dim)}
+.node__f .rp:hover{color:var(--amber)}
+.node__f .zn{margin-left:auto;text-transform:uppercase;letter-spacing:.09em;color:var(--zc,var(--dim));opacity:.9;white-space:nowrap}
+.node__go{position:absolute;inset:0;z-index:1}
+.node__fav{
+  position:absolute;top:7px;right:7px;z-index:2;width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;color:var(--dim);
+  border-radius:2px;opacity:0;transition:opacity .15s,color .15s;
+}
+.node:hover .node__fav,.node__fav.on,.node__fav:focus-visible{opacity:1}
+.node__fav:hover,.node__fav.on{color:var(--amber)}
+
+.arch{margin-top:26px;border-top:1px solid var(--line-soft);padding-top:14px}
+.arch>summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
+}
+.arch>summary::-webkit-details-marker{display:none}
+.arch>summary:hover{color:var(--muted)}
+.arch>summary::after{content:"▸";display:inline-block;transition:transform .18s}
+.arch[open]>summary::after{transform:rotate(90deg)}
+.arch .grid{margin-top:12px}
+
+.empty{
+  border:1px dashed var(--line);border-radius:var(--r);
+  padding:30px 20px;text-align:center;color:var(--muted);font-size:12.5px;
+}
+.empty b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:5px}
+.hint-line{font-size:11.5px;color:var(--dim);padding:2px 0 10px}
+
+.foot{
+  display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;
+  margin-top:26px;padding-top:14px;border-top:1px solid var(--line-soft);
+  font-family:var(--f-mono);font-size:10px;color:var(--dim);letter-spacing:.05em;
+}
+.foot .sp{margin-left:auto}
+
+/* ================= СПОКІЙ / ДОСТУПНІСТЬ ================= */
+body.calm #stars{display:none}
+body.calm #nebula{animation:none}
+body.calm *{animation:none!important}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  #stars,#boot{display:none}
+}
+
+/* ================= МОБІЛЬНІ ================= */
+@media (max-width:860px){
+  .shell{flex-direction:column}
+  .rail{
+    width:100%;flex:none;height:auto;position:static;
+    border-right:0;border-bottom:1px solid var(--line);
+    display:flex;gap:0;overflow-x:auto;padding:0;
+  }
+  .rail .grp{display:none}
+  .rail a{
+    border-left:0;border-bottom:2px solid transparent;
+    white-space:nowrap;padding:9px 12px;
+  }
+  .rail a:hover{padding-left:12px}
+  .rail a.on{border-left:0;border-bottom-color:var(--amber)}
+  .rail a.on::after{display:none}
+  .rail a .n{margin-left:5px}
+  .filters{top:calc(46px + env(safe-area-inset-top,0px))}
+  .grid{grid-template-columns:1fr}
+  .node__fav{opacity:1}
+  .topbar{gap:8px;padding:0 10px}
+  .mark span{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+<div id="nebula" aria-hidden="true"></div>
+
+<div id="boot" role="status" aria-label="Запуск пульта">
+  <div class="ring"><i></i><i></i><i></i><b>FL</b></div>
+  <div class="lines">
+    <div>зв'язок із вузлами<span>встановлено</span></div>
+    <div>каталог станцій<span>41</span></div>
+    <div>ділянки і маршрути<span>побудовано</span></div>
+    <div>телеметрія оновлень<span>зчитано</span></div>
+    <div>пульт<span>до роботи</span></div>
+  </div>
+  <div class="bar"><i></i></div>
+</div>
+
+<header class="topbar">
+  <div class="mark"><i></i><b>FOODLINE</b><span>Пульт додатків</span></div>
+  <div class="spacer"></div>
+  <div class="status" id="statusBox"><span class="dot"></span><span id="statusText">38 в ефірі</span></div>
+  <button class="btn sm" id="btnInstall" hidden>Встановити</button>
+  <button class="btn sm" id="btnCalm" title="Вимкнути рух інтерфейсу">Спокій</button>
+  <a class="btn sm" href="https://github.com/YuriyBuz?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+</header>
+
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="Ділянки і стан"></nav>
+
+  <div class="main">
+    <div class="filters">
+      <div class="srch">
+        <span class="ic" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </span>
+        <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Пошук: назва, ділянка, репозиторій" aria-label="Пошук додатків">
+        <span class="kb">/</span>
+      </div>
+      <span class="flab">Роль</span>
+      <div id="roles" style="display:flex;gap:5px;flex-wrap:wrap"></div>
+      <button class="btn sm" id="btnReset" style="margin-left:auto">Скинути</button>
+    </div>
+
+    <div class="wrap">
+      <div class="kpis" id="kpis"></div>
+
+      <section class="card mapcard">
+        <h3>Секторна карта<span class="hint">клік по сектору — фільтр, клік по точці — запуск</span></h3>
+        <div class="mapbox" id="mapbox">
+          <div class="tip" id="tip" role="tooltip"></div>
+        </div>
+        <div class="maplegend" id="maplegend"></div>
+      </section>
+
+      <div id="board"></div>
+
+      <footer class="foot">
+        <span id="stat"></span>
+        <span>адреси: yuriybuz.github.io/&lt;репозиторій&gt;/</span>
+        <span class="sp">каталог станом на 12.08.2026</span>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status">
+  <b>Є новіша версія пульта</b>
+  <button class="btn sm" id="btnUpdate">Оновити</button>
+</div>
+
+<script>
+/* ================================================================
+   КАТАЛОГ
+   Додати новий додаток — один рядок у APPS.
+     repo  — точна назва репозиторію (з неї будується адреса)
+     name  — як показувати людям
+     desc  — один рядок: що робить
+     group — daily | sales | plan | ref | learn | arch
+     zone  — raw | water | cook | fill | pack | sales | people
+     roles — кому потрібен
+     state — live | doc | test | arch
+     nopage — true, якщо сторінки немає: відкриє репозиторій
+   ================================================================ */
+const OWNER = 'YuriyBuz';
+const TODAY = new Date('2026-08-12');
+
+const ZONES = [
+  {id:'cook',   label:'Варка',      c:'#D9563F'},
+  {id:'fill',   label:'Розлив',     c:'#E8A33D'},
+  {id:'pack',   label:'Пакування',  c:'#6F8FD0'},
+  {id:'sales',  label:'Збут',       c:'#B07AB4'},
+  {id:'people', label:'Персонал',   c:'#D98BA0'},
+  {id:'raw',    label:'Сировина',   c:'#86B860'},
+  {id:'water',  label:'Вода · ХВО', c:'#55A99B'}
+];
+
+const GROUPS = [
+  {id:'daily', label:'Щоденний контур'},
+  {id:'sales', label:'Замовлення та збут'},
+  {id:'plan',  label:'Планування та запаси'},
+  {id:'ref',   label:'Інструкції та довідники'},
+  {id:'learn', label:'Навчання і тести'}
+];
+
+const STATES = [
+  {id:'live', label:'Робочі'},
+  {id:'doc',  label:'Інструкції'},
+  {id:'test', label:'Навчання'},
+  {id:'arch', label:'Архів'}
+];
+
+const ROLES = ['Майстер','Контролер','Механік','Оператор','Збут','Персонал'];
+
+const APPS = [
+  {repo:'registration', name:'Реєстрація зміни', desc:'Кіоск на планшеті: початок і кінець зміни, звірка табеля.', group:'daily', zone:'people', roles:['Персонал'], state:'live', upd:'2026-08-02'},
+  {repo:'shift-checklist', name:'Портал майстра зміни', desc:'Чек-листи по ділянках і контроль виконання за зміну.', group:'daily', zone:'cook', roles:['Майстер'], state:'live', upd:'2026-07-23'},
+  {repo:'shift-checklist_QC', name:'QC Master', desc:'Зміновий контур контролера на лінії розливу.', group:'daily', zone:'fill', roles:['Контролер'], state:'live', upd:'2025-12-27'},
+  {repo:'quality-controller-notebook.', name:'Цифровий блокнот QC', desc:'Вхідний контроль, варка, мийка, вода, пакування, маркування.', group:'daily', zone:'cook', roles:['Контролер'], state:'live', upd:'2026-08-09'},
+  {repo:'mechanic-checklist', name:'Чек-лист механіка зміни', desc:'Обхід обладнання і фіксація стану вузлів.', group:'daily', zone:'pack', roles:['Механік'], state:'live', upd:'2026-06-06'},
+  {repo:'AIScaner', name:'Завдання на варку', desc:'Сканування завдання, фото у Drive, звірка рецептури.', group:'daily', zone:'cook', roles:['Контролер','Оператор'], state:'live', upd:'2026-07-30'},
+  {repo:'WATER-TREATMENT-UNIT-checklist', name:'Чек-лист ХВО', desc:'Контроль роботи станції водопідготовки за зміну.', group:'daily', zone:'water', roles:['Механік'], state:'live', upd:'2025-11-15'},
+  {repo:'portal', name:'Портал працівника', desc:'Графік, підміни, тести — усе в одному вікні.', group:'daily', zone:'people', roles:['Персонал'], state:'live', upd:'2026-07-16'},
+
+  {repo:'orderFLP-6-', name:'Замовлення соусів · FLP-6', desc:'Бланк на 6 позицій із відправкою на пошту.', group:'sales', zone:'sales', roles:['Збут'], state:'live', upd:'2026-08-10'},
+  {repo:'orderFLP-13-', name:'Замовлення соусів · FLP-13', desc:'Бланк на 13 позицій із відправкою на пошту.', group:'sales', zone:'sales', roles:['Збут'], state:'live', upd:'2026-08-11'},
+  {repo:'orderFLP-19-', name:'Замовлення соусів · FLP-19', desc:'Бланк на 19 позицій із відправкою на пошту.', group:'sales', zone:'sales', roles:['Збут'], state:'live', upd:'2026-08-11'},
+  {repo:'Commercial-Intelligence-API', name:'Комерційний пульт', desc:'Продажі, мережі та маржа в одному розрізі.', group:'sales', zone:'sales', roles:['Збут'], state:'live', upd:'2026-08-09'},
+  {repo:'complaint', name:'Створення рекламації', desc:'Оформлення претензії з фото і передачею в якість.', group:'sales', zone:'sales', roles:['Збут','Контролер'], state:'live', upd:'2025-09-29'},
+
+  {repo:'MRP_Import', name:'MRP · Supply Deck', desc:'Потреба в сировині та горизонт постачання по блоках.', group:'plan', zone:'raw', roles:['Збут','Майстер'], state:'live', upd:'2026-08-08'},
+  {repo:'Supply_Planner', name:'Планувальник сировини', desc:'Розрахунок закупівель під план виробництва.', group:'plan', zone:'raw', roles:['Збут'], state:'live', upd:'2026-07-21'},
+  {repo:'Spare-parts-mechanical-service', name:'Облік ЗІП', desc:'Запчастини механічної служби: залишки і видача.', group:'plan', zone:'pack', roles:['Механік'], state:'live', upd:'2026-04-25'},
+  {repo:'schedule', name:'Графік роботи', desc:'Розстановка працівників по змінах на місяць.', group:'plan', zone:'people', roles:['Майстер','Персонал'], state:'live', upd:'2026-03-28'},
+  {repo:'R-D', name:'R&D Deck', desc:'Розробка нових продуктів: статуси і етапи проєктів.', group:'plan', zone:'cook', roles:['Контролер'], state:'live', upd:'2026-08-11'},
+
+  {repo:'Ingredient_Compatibility_Matrix', name:'Сумісність сировини PRO', desc:'Сканер: що з чим можна ставити поруч на зберігання.', group:'ref', zone:'raw', roles:['Контролер','Оператор'], state:'doc', upd:'2026-06-21'},
+  {repo:'raw_material', name:'Переробка сировини', desc:'Порядок підготовки сировини перед подачею у варку.', group:'ref', zone:'raw', roles:['Оператор'], state:'doc', upd:'2026-04-30'},
+  {repo:'Instructions-for-monitoring-water-quality', name:'Контроль якості води', desc:'Що, коли і чим міряти на станції ХВО.', group:'ref', zone:'water', roles:['Контролер','Механік'], state:'doc', upd:'2026-04-26'},
+  {repo:'washing_water_tanks', name:'Санобробка накопичувачів води', desc:'Регламент мийки синіх ємностей запасу води.', group:'ref', zone:'water', roles:['Оператор'], state:'doc', upd:'2026-06-20'},
+  {repo:'tank_washing', name:'Санітарна обробка ємностей', desc:'Мийка варильних і проміжних ємностей.', group:'ref', zone:'cook', roles:['Оператор'], state:'doc', upd:'2026-06-08'},
+  {repo:'Troubleshooting', name:'Усунення несправностей', desc:'Пам\u2019ятка оператора: типові збої і що робити першим.', group:'ref', zone:'cook', roles:['Оператор','Механік'], state:'doc', upd:'2026-07-04'},
+  {repo:'Rules-for-the-transition-between-batches-Bottling-', name:'Перехід між партіями', desc:'Правила переналагодження лінії розливу.', group:'ref', zone:'fill', roles:['Майстер','Оператор'], state:'doc', upd:'2025-12-13'},
+  {repo:'TechInst', name:'Налаштування обладнання', desc:'Технічні інструкції з параметрами по вузлах.', group:'ref', zone:'pack', roles:['Механік'], state:'doc', upd:'2026-07-24'},
+  {repo:'TechInst_PWA', name:'Налаштування обладнання · PWA', desc:'Та сама база, встановлюється на планшет офлайн.', group:'ref', zone:'pack', roles:['Механік'], state:'doc', upd:'2026-07-19'},
+  {repo:'Smart_code', name:'Довідник SMART КОД', desc:'Як читати і формувати код партії на упаковці.', group:'ref', zone:'pack', roles:['Оператор','Контролер'], state:'doc', upd:'2026-05-20'},
+  {repo:'viewport', name:'ПЕТ тара', desc:'Довідник по пляшці, кришці та етикетці.', group:'ref', zone:'pack', roles:['Оператор','Збут'], state:'doc', upd:'2026-01-09'},
+  {repo:'Safety_instruction', name:'Інструкція з ТБ', desc:'Повна інструкція з техніки безпеки на виробництві соусів.', group:'ref', zone:'people', roles:['Персонал'], state:'doc', upd:'2026-05-30'},
+
+  {repo:'TEST_1', name:'Тест: паспорт якості', desc:'Перевірка знань за FSSC 22000 v6.', group:'learn', zone:'people', roles:['Контролер'], state:'test', upd:'2026-06-03'},
+  {repo:'TEST_3', name:'Тест: техніка безпеки', desc:'Вхідна перевірка знань з ТБ.', group:'learn', zone:'people', roles:['Персонал'], state:'test', upd:'2026-06-03'},
+  {repo:'TEST_4', name:'Компетенції: майстер зміни', desc:'Оцінка знань перед допуском до зміни.', group:'learn', zone:'people', roles:['Майстер'], state:'test', upd:'2026-06-01'},
+  {repo:'TEST_5', name:'Компетенції: контролер якості', desc:'Оцінка знань перед допуском до контролю.', group:'learn', zone:'people', roles:['Контролер'], state:'test', upd:'2026-06-02'},
+  {repo:'TEST_6', name:'Компетенції: механік зміни', desc:'Оцінка знань перед допуском до обслуговування.', group:'learn', zone:'people', roles:['Механік'], state:'test', upd:'2026-06-02'},
+
+  {repo:'task-scanner', name:'Завдання на варку · стара версія', desc:'Замінено на AIScaner.', group:'arch', zone:'cook', roles:['Контролер'], state:'arch', upd:'2026-04-20'},
+  {repo:'ERP', name:'MRP Import · попередня версія', desc:'Замінено на MRP · Supply Deck.', group:'arch', zone:'raw', roles:['Збут'], state:'arch', upd:'2026-04-06'},
+  {repo:'test_2', name:'Тест: техніка безпеки · дубль', desc:'Дублює TEST_3.', group:'arch', zone:'people', roles:['Персонал'], state:'arch', upd:'2026-04-01'},
+  {repo:'Store_check', name:'Store check', desc:'Python-скрипт збору даних по мережах, без вебсторінки.', group:'arch', zone:'sales', roles:['Збут'], state:'arch', upd:'2026-05-18', nopage:true},
+  {repo:'EMP', name:'EMP', desc:'Лише README, сторінки немає.', group:'arch', zone:'people', roles:['Персонал'], state:'arch', upd:'2026-05-20', nopage:true},
+  {repo:'instruction', name:'instruction', desc:'Порожній репозиторій.', group:'arch', zone:'people', roles:['Персонал'], state:'arch', upd:'2026-05-17', nopage:true}
+];
+
+/* ================= СЛУЖБОВЕ ================= */
+const store = (() => {
+  let mem = {}, ok = true;
+  try { localStorage.setItem('__fl','1'); localStorage.removeItem('__fl'); } catch(e){ ok = false; }
+  return {
+    get(k){ try { return ok ? localStorage.getItem(k) : (mem[k] ?? null); } catch(e){ return mem[k] ?? null; } },
+    set(k,v){ try { ok ? localStorage.setItem(k,v) : (mem[k]=v); } catch(e){ mem[k]=v; } }
+  };
+})();
+
+const el = id => document.getElementById(id);
+const zone = id => ZONES.find(z => z.id === id) || {label:'', c:'#8A6224'};
+const url  = a => a.nopage ? `https://github.com/${OWNER}/${a.repo}` : `https://${OWNER.toLowerCase()}.github.io/${a.repo}/`;
+const dmy  = s => { const p = s.split('-'); return `${p[2]}.${p[1]}.${p[0].slice(2)}`; };
+const days = s => Math.round((TODAY - new Date(s)) / 86400000);
+const esc  = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const state = {
+  q:'', zone:'all', st:'all', role:'all',
+  favs: new Set(JSON.parse(store.get('flhub:favs') || '[]'))
+};
+
+function match(a){
+  if (state.zone !== 'all' && a.zone !== state.zone) return false;
+  if (state.st   !== 'all' && a.state !== state.st) return false;
+  if (state.role !== 'all' && !a.roles.includes(state.role)) return false;
+  if (!state.q) return true;
+  const hay = [a.name, a.desc, a.repo, zone(a.zone).label, a.roles.join(' ')].join(' ').toLowerCase();
+  return state.q.split(/\s+/).every(t => hay.includes(t));
+}
+const qMatch = a => state.q && [a.name,a.desc,a.repo,zone(a.zone).label].join(' ').toLowerCase().includes(state.q);
+
+/* ================= РЕЙКА ================= */
+function buildRail(){
+  const r = el('rail');
+  r.innerHTML = '';
+  const grp = t => { const d = document.createElement('div'); d.className='grp'; d.textContent=t; r.appendChild(d); };
+  const item = (label, count, on, color, onClick) => {
+    const a = document.createElement('a');
+    a.className = 'rail-i' + (on ? ' on' : '');
+    a.setAttribute('role','button'); a.tabIndex = 0;
+    a.innerHTML = (color ? `<span class="zd" style="color:${color}"></span>` : '') +
+                  `<span>${esc(label)}</span><span class="n">${count}</span>`;
+    a.addEventListener('click', onClick);
+    a.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } });
+    r.appendChild(a);
+  };
+  grp('Ділянка');
+  item('Усі вузли', APPS.length, state.zone === 'all', null, () => { state.zone='all'; refresh(); });
+  ZONES.forEach(z => item(z.label, APPS.filter(a => a.zone === z.id).length, state.zone === z.id, z.c,
+    () => { state.zone = state.zone === z.id ? 'all' : z.id; refresh(); }));
+  grp('Стан');
+  STATES.forEach(s => item(s.label, APPS.filter(a => a.state === s.id).length, state.st === s.id, null,
+    () => { state.st = state.st === s.id ? 'all' : s.id; refresh(); }));
+}
+
+/* ================= ФІЛЬТРИ ================= */
+function buildRoles(){
+  const box = el('roles');
+  box.innerHTML = '';
+  ROLES.forEach(rl => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (state.role === rl ? ' on' : '');
+    b.textContent = rl;
+    b.addEventListener('click', () => { state.role = state.role === rl ? 'all' : rl; refresh(); });
+    box.appendChild(b);
+  });
+}
+
+/* ================= ПОКАЗНИКИ ================= */
+function buildKpis(){
+  const live = APPS.filter(a => a.state === 'live').length;
+  const fresh = APPS.filter(a => days(a.upd) <= 60 && a.state !== 'arch').length;
+  const arch = APPS.filter(a => a.state === 'arch').length;
+  el('kpis').innerHTML = `
+    <div class="kpi"><div class="k">Вузлів у мережі</div><div class="v">${APPS.length}</div><div class="s">${APPS.filter(a=>!a.nopage).length} зі своєю сторінкою</div></div>
+    <div class="kpi"><div class="k">Робочих додатків</div><div class="v">${live}</div><div class="s">${APPS.filter(a=>a.state==='doc').length} інструкцій, ${APPS.filter(a=>a.state==='test').length} тестів</div></div>
+    <div class="kpi"><div class="k">Оновлено за 60 днів</div><div class="v">${fresh}</div><div class="s">решта чекає на ревізію</div></div>
+    <div class="kpi"><div class="k">В архіві</div><div class="v">${arch}</div><div class="s">замінені й порожні</div></div>`;
+}
+
+/* ================= СЕКТОРНА КАРТА ================= */
+const CX = 300, CY = 300, R = 214;
+const RINGS = [112, 158, 200];
+const A0 = -90 - (360 / ZONES.length) / 2;
+const SPAN = 360 / ZONES.length;
+const pol = (a, r) => [CX + r * Math.cos(a * Math.PI / 180), CY + r * Math.sin(a * Math.PI / 180)];
+
+function buildMap(){
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 600 600');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Секторна карта додатків за ділянками');
+
+  const defs = document.createElementNS(NS, 'defs');
+  defs.innerHTML = `
+    <radialGradient id="coreG"><stop offset="0" stop-color="#F6C777"/><stop offset="1" stop-color="#8A6224" stop-opacity="0"/></radialGradient>
+    <linearGradient id="sweepG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E8A33D" stop-opacity="0"/><stop offset="1" stop-color="#E8A33D" stop-opacity=".16"/>
+    </linearGradient>`;
+  svg.appendChild(defs);
+
+  const g = t => { const n = document.createElementNS(NS, 'g'); if (t) n.setAttribute('class', t); svg.appendChild(n); return n; };
+  const gSect = g('gs'), gGuide = g('gg'), gSweep = g('sweep'), gLab = g('gl'), gPts = g('gp'), gCore = g('gc');
+
+  // сектори
+  ZONES.forEach((z, i) => {
+    const a0 = A0 + i * SPAN, a1 = a0 + SPAN;
+    const p0 = pol(a0, R), p1 = pol(a1, R);
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', `M${CX},${CY} L${p0[0].toFixed(1)},${p0[1].toFixed(1)} A${R},${R} 0 0 1 ${p1[0].toFixed(1)},${p1[1].toFixed(1)} Z`);
+    path.setAttribute('class', 'sector');
+    path.setAttribute('fill', z.c);
+    path.setAttribute('fill-opacity', '.05');
+    path.setAttribute('stroke', z.c);
+    path.setAttribute('stroke-opacity', '.16');
+    path.dataset.zone = z.id;
+    path.addEventListener('click', () => { state.zone = state.zone === z.id ? 'all' : z.id; refresh(); });
+    gSect.appendChild(path);
+  });
+
+  // напрямні кола і промені
+  RINGS.forEach(r => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', CX); c.setAttribute('cy', CY); c.setAttribute('r', r);
+    c.setAttribute('class', 'guide');
+    gGuide.appendChild(c);
+  });
+  ZONES.forEach((z, i) => {
+    const a = A0 + i * SPAN, p = pol(a, R);
+    const l = document.createElementNS(NS, 'line');
+    l.setAttribute('x1', CX); l.setAttribute('y1', CY);
+    l.setAttribute('x2', p[0].toFixed(1)); l.setAttribute('y2', p[1].toFixed(1));
+    l.setAttribute('class', 'spoke');
+    gGuide.appendChild(l);
+  });
+
+  // промінь радара
+  const sw = document.createElementNS(NS, 'path');
+  const s0 = pol(-90, R), s1 = pol(-90 + 52, R);
+  sw.setAttribute('d', `M${CX},${CY} L${s0[0].toFixed(1)},${s0[1].toFixed(1)} A${R},${R} 0 0 1 ${s1[0].toFixed(1)},${s1[1].toFixed(1)} Z`);
+  sw.setAttribute('fill', 'url(#sweepG)');
+  gSweep.appendChild(sw);
+
+  // підписи секторів
+  ZONES.forEach((z, i) => {
+    const mid = A0 + i * SPAN + SPAN / 2;
+    const p = pol(mid, R + 22);
+    const cos = Math.cos(mid * Math.PI / 180);
+    const anchor = cos > .25 ? 'start' : (cos < -.25 ? 'end' : 'middle');
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('x', p[0].toFixed(1)); t.setAttribute('y', p[1].toFixed(1));
+    t.setAttribute('text-anchor', anchor);
+    t.setAttribute('class', 'slabel');
+    t.dataset.zone = z.id;
+    const n = APPS.filter(a => a.zone === z.id).length;
+    t.innerHTML = `${esc(z.label)}<tspan class="scount" dx="6">${n}</tspan>`;
+    t.addEventListener('click', () => { state.zone = state.zone === z.id ? 'all' : z.id; refresh(); });
+    gLab.appendChild(t);
+  });
+
+  // точки-додатки
+  ZONES.forEach((z, i) => {
+    const items = APPS.filter(a => a.zone === z.id);
+    const rings = items.length <= 4 ? 1 : (items.length <= 8 ? 2 : 3);
+    const buckets = Array.from({length: rings}, () => []);
+    items.forEach((a, k) => buckets[k % rings].push(a));
+    const a0 = A0 + i * SPAN;
+    buckets.forEach((bucket, ri) => {
+      const rad = RINGS[rings === 1 ? 1 : (rings === 2 ? (ri === 0 ? 0 : 2) : ri)];
+      bucket.forEach((app, j) => {
+        const ang = a0 + SPAN * (j + 1) / (bucket.length + 1);
+        const p = pol(ang, rad);
+        const node = document.createElementNS(NS, 'g');
+        node.setAttribute('class', 'pt');
+        node.dataset.repo = app.repo;
+        node.setAttribute('tabindex', '0');
+        node.setAttribute('role', 'link');
+        node.setAttribute('aria-label', app.name);
+
+        const halo = document.createElementNS(NS, 'circle');
+        halo.setAttribute('cx', p[0].toFixed(1)); halo.setAttribute('cy', p[1].toFixed(1));
+        halo.setAttribute('r', 9); halo.setAttribute('fill', 'none');
+        halo.setAttribute('stroke', '#E8A33D'); halo.setAttribute('stroke-width', '1');
+        halo.setAttribute('class', 'halo');
+        node.appendChild(halo);
+
+        const core = document.createElementNS(NS, 'circle');
+        core.setAttribute('cx', p[0].toFixed(1)); core.setAttribute('cy', p[1].toFixed(1));
+        core.setAttribute('class', 'core');
+        if (app.state === 'live'){ core.setAttribute('r', 4.6); core.setAttribute('fill', z.c); }
+        else if (app.state === 'doc'){ core.setAttribute('r', 4.1); core.setAttribute('fill', '#12100E'); core.setAttribute('stroke', z.c); core.setAttribute('stroke-width', '1.5'); }
+        else if (app.state === 'test'){ core.setAttribute('r', 3); core.setAttribute('fill', '#9C9083'); }
+        else { core.setAttribute('r', 2.6); core.setAttribute('fill', '#6E655B'); core.setAttribute('opacity', '.6'); }
+        node.appendChild(core);
+
+        const hit = document.createElementNS(NS, 'circle');
+        hit.setAttribute('cx', p[0].toFixed(1)); hit.setAttribute('cy', p[1].toFixed(1));
+        hit.setAttribute('r', 11); hit.setAttribute('class', 'hit');
+        node.appendChild(hit);
+
+        const ttl = document.createElementNS(NS, 'title');
+        ttl.textContent = app.name;
+        node.appendChild(ttl);
+
+        const open = () => window.open(url(app), '_blank', 'noopener');
+        node.addEventListener('click', open);
+        node.addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
+        node.addEventListener('mouseenter', () => showTip(app, p));
+        node.addEventListener('focus', () => showTip(app, p));
+        node.addEventListener('mouseleave', hideTip);
+        node.addEventListener('blur', hideTip);
+        gPts.appendChild(node);
+      });
+    });
+  });
+
+  // ядро
+  const glow = document.createElementNS(NS, 'circle');
+  glow.setAttribute('cx', CX); glow.setAttribute('cy', CY); glow.setAttribute('r', 44);
+  glow.setAttribute('fill', 'url(#coreG)'); glow.setAttribute('opacity', '.5');
+  gCore.appendChild(glow);
+  const cr = document.createElementNS(NS, 'circle');
+  cr.setAttribute('cx', CX); cr.setAttribute('cy', CY); cr.setAttribute('r', 15);
+  cr.setAttribute('fill', '#12100E'); cr.setAttribute('stroke', '#E8A33D'); cr.setAttribute('stroke-width', '1.2');
+  gCore.appendChild(cr);
+  const ct = document.createElementNS(NS, 'text');
+  ct.setAttribute('x', CX); ct.setAttribute('y', CY + 4);
+  ct.setAttribute('text-anchor', 'middle');
+  ct.setAttribute('style', 'font-family:var(--f-display);font-size:11px;letter-spacing:.16em;fill:#E8A33D');
+  ct.textContent = 'FL';
+  gCore.appendChild(ct);
+
+  el('mapbox').appendChild(svg);
+
+  el('maplegend').innerHTML = `
+    <span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.6" fill="#E8A33D"/></svg>робочий</span>
+    <span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.1" fill="#12100E" stroke="#E8A33D" stroke-width="1.5"/></svg>інструкція</span>
+    <span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="3" fill="#9C9083"/></svg>навчання</span>
+    <span><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="2.6" fill="#6E655B" opacity=".6"/></svg>архів</span>
+    <span style="margin-left:auto">колір сектора = ділянка</span>`;
+}
+
+/* ================= ПІДКАЗКА НА КАРТІ ================= */
+function showTip(app, p){
+  const box = el('mapbox'), tip = el('tip');
+  const svg = box.querySelector('svg');
+  if (!svg) return;
+  const rb = box.getBoundingClientRect(), rs = svg.getBoundingClientRect();
+  const k = rs.width / 600;
+  tip.innerHTML = `<b>${esc(app.name)}</b><i>${esc(app.desc)}</i><u>${esc(zone(app.zone).label)} · ${dmy(app.upd)}</u>`;
+  tip.style.left = (rs.left - rb.left + p[0] * k) + 'px';
+  tip.style.top  = (rs.top  - rb.top  + p[1] * k - 12) + 'px';
+  tip.classList.add('show');
+}
+const hideTip = () => el('tip').classList.remove('show');
+
+function paintMap(){
+  document.querySelectorAll('.sector').forEach(s => s.classList.toggle('on', s.dataset.zone === state.zone));
+  document.querySelectorAll('.slabel').forEach(s => s.classList.toggle('on', s.dataset.zone === state.zone));
+  const shown = new Set(APPS.filter(match).map(a => a.repo));
+  document.querySelectorAll('.pt').forEach(p => {
+    const app = APPS.find(a => a.repo === p.dataset.repo);
+    p.classList.toggle('mute', !shown.has(p.dataset.repo));
+    p.classList.toggle('hitq', !!(app && qMatch(app)));
+  });
+}
+
+/* ================= ПЛАТИ ================= */
+function tile(a){
+  const z = zone(a.zone);
+  const d = document.createElement('article');
+  d.className = 'node';
+  d.style.setProperty('--zc', z.c);
+  const fav = state.favs.has(a.repo);
+  d.innerHTML = `
+    <a class="node__go" href="${url(a)}" target="_blank" rel="noopener" aria-label="Відкрити ${esc(a.name)}"></a>
+    <button class="node__fav${fav ? ' on' : ''}" type="button" aria-pressed="${fav}" title="${fav ? 'Прибрати з обраного' : 'Додати в обране'}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="${fav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+        <path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6L12 16.8 6.6 19.6l1.2-6L3.3 9.4l6.1-.8z"/></svg>
+    </button>
+    <div class="node__t"><i class="st ${a.state}" aria-hidden="true"></i><h4>${esc(a.name)}</h4></div>
+    <p>${esc(a.desc)}</p>
+    <div class="node__f">
+      <a class="rp" href="https://github.com/${OWNER}/${a.repo}" target="_blank" rel="noopener" title="Репозиторій ${esc(a.repo)}">${esc(a.repo)}</a>
+      <span>${dmy(a.upd)}</span>
+      <span class="zn">${esc(z.label)}</span>
+    </div>`;
+  d.querySelector('.node__fav').addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    state.favs.has(a.repo) ? state.favs.delete(a.repo) : state.favs.add(a.repo);
+    store.set('flhub:favs', JSON.stringify([...state.favs]));
+    refresh();
+  });
+  return d;
+}
+
+function section(label, items){
+  const f = document.createDocumentFragment();
+  const h = document.createElement('div');
+  h.className = 'sect';
+  h.innerHTML = `<h2>${esc(label)}</h2><span class="rule"></span><span class="n">${items.length}</span>`;
+  const g = document.createElement('div');
+  g.className = 'grid';
+  items.forEach((a, i) => { const t = tile(a); t.style.animationDelay = Math.min(i * 22, 260) + 'ms'; g.appendChild(t); });
+  f.append(h, g);
+  return f;
+}
+
+function renderBoard(){
+  const b = el('board');
+  b.innerHTML = '';
+  const shown = APPS.filter(match);
+  const favs = shown.filter(a => state.favs.has(a.repo));
+
+  if (favs.length) b.appendChild(section('Швидкий доступ', favs));
+  else if (!state.q && state.zone === 'all' && state.st === 'all' && state.role === 'all'){
+    const p = document.createElement('p');
+    p.className = 'hint-line';
+    p.textContent = 'Позначте зіркою те, чим користуєтесь щозміни — воно закріпиться зверху.';
+    b.appendChild(p);
+  }
+
+  GROUPS.forEach(gr => {
+    const items = shown.filter(a => a.group === gr.id && !state.favs.has(a.repo));
+    if (items.length) b.appendChild(section(gr.label, items));
+  });
+
+  const arch = shown.filter(a => a.group === 'arch' && !state.favs.has(a.repo));
+  if (arch.length){
+    const d = document.createElement('details');
+    d.className = 'arch';
+    d.innerHTML = `<summary>Архів і чернетки · ${arch.length}</summary>`;
+    const g = document.createElement('div');
+    g.className = 'grid';
+    arch.forEach(a => g.appendChild(tile(a)));
+    d.appendChild(g);
+    b.appendChild(d);
+  }
+
+  if (!shown.length){
+    const e = document.createElement('div');
+    e.className = 'empty';
+    e.innerHTML = '<b>У цьому секторі порожньо</b>Спробуйте «варка», «вода», «тест», «замовлення» або назву репозиторію.';
+    b.appendChild(e);
+  }
+
+  el('stat').textContent = `показано ${shown.length} з ${APPS.length}`;
+}
+
+function refresh(){ buildRail(); buildRoles(); renderBoard(); paintMap(); }
+
+/* ================= ПОШУК І КЛАВІАТУРА ================= */
+el('q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); renderBoard(); paintMap(); });
+el('btnReset').addEventListener('click', () => {
+  state.q = ''; state.zone = 'all'; state.st = 'all'; state.role = 'all';
+  el('q').value = ''; refresh();
+});
+document.addEventListener('keydown', e => {
+  const q = el('q');
+  if (e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); q.select(); }
+  if (e.key === 'Escape' && document.activeElement === q){ q.value = ''; state.q = ''; renderBoard(); paintMap(); q.blur(); }
+  if (e.key === 'Enter' && document.activeElement === q){
+    const first = document.querySelector('.node__go');
+    if (first) window.open(first.href, '_blank', 'noopener');
+  }
+});
+
+/* ================= СПОКІЙ ================= */
+const calmOn = () => store.get('flhub:calm') === '1';
+function applyCalm(){
+  const on = calmOn();
+  document.body.classList.toggle('calm', on);
+  el('btnCalm').classList.toggle('on', on);
+  on ? stopStars() : startStars();
+}
+el('btnCalm').addEventListener('click', () => { store.set('flhub:calm', calmOn() ? '0' : '1'); applyCalm(); });
+
+/* ================= ЗОРІ ================= */
+let starTimer = null, shooter = null;
+function startStars(){
+  const c = el('stars');
+  if (!c || starTimer || calmOn()) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ctx = null;
+  try { ctx = c.getContext('2d'); } catch(e){ return; }
+  if (!ctx) return;
+
+  let w = 0, h = 0;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  function size(){
+    w = c.clientWidth; h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  window.addEventListener('resize', size);
+
+  const parts = Array.from({length: 150}, () => ({
+    x: Math.random(), y: Math.random(),
+    z: .2 + Math.random() * .8,
+    r: .35 + Math.random() * 1.25,
+    ph: Math.random() * 6.28
+  }));
+
+  let t = 0;
+  function frame(){
+    if (document.hidden){ starTimer = requestAnimationFrame(frame); return; }
+    t += .0016;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const p of parts){
+      const y = ((p.y - t * p.z * .16) % 1 + 1) % 1;
+      const tw = .45 + .55 * Math.abs(Math.sin(p.ph + t * 9 * p.z));
+      ctx.beginPath();
+      ctx.arc(p.x * w, y * h, p.r * (.6 + p.z * .6), 0, 6.2832);
+      ctx.fillStyle = p.z > .72
+        ? `rgba(239,231,217,${.16 + tw * .5})`
+        : (p.z > .45 ? `rgba(232,163,61,${.09 + tw * .26})` : `rgba(111,143,208,${.07 + tw * .2})`);
+      ctx.fill();
+    }
+
+    if (shooter){
+      shooter.p += .022;
+      if (shooter.p >= 1) shooter = null;
+      else {
+        const x = shooter.x + shooter.dx * shooter.p * w;
+        const y = shooter.y + shooter.dy * shooter.p * h;
+        const gr = ctx.createLinearGradient(x, y, x - shooter.dx * 130, y - shooter.dy * 130);
+        gr.addColorStop(0, 'rgba(239,231,217,.75)');
+        gr.addColorStop(1, 'rgba(239,231,217,0)');
+        ctx.strokeStyle = gr; ctx.lineWidth = 1.1;
+        ctx.beginPath(); ctx.moveTo(x, y);
+        ctx.lineTo(x - shooter.dx * 130, y - shooter.dy * 130);
+        ctx.stroke();
+      }
+    } else if (Math.random() < .0016){
+      shooter = { x: Math.random() * w * .8, y: Math.random() * h * .4, dx: .55, dy: .32, p: 0 };
+    }
+
+    starTimer = requestAnimationFrame(frame);
+  }
+  starTimer = requestAnimationFrame(frame);
+}
+function stopStars(){
+  if (starTimer){ cancelAnimationFrame(starTimer); starTimer = null; }
+  const c = el('stars');
+  try { const ctx = c.getContext('2d'); ctx && ctx.clearRect(0, 0, c.width, c.height); } catch(e){}
+}
+
+/* ================= ПУСК ================= */
+buildMap();
+refresh();
+buildKpis();
+applyCalm();
+el('statusText').textContent = APPS.filter(a => !a.nopage).length + ' в ефірі';
+
+window.addEventListener('scroll', hideTip, {passive:true});
+
+const boot = el('boot');
+const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (reduced || calmOn()) boot.remove();
+else setTimeout(() => { boot.classList.add('out'); setTimeout(() => boot.remove(), 520); }, 1750);
+
+/* ================================================================
+   ВСТАНОВЛЕННЯ НА ПРИСТРІЙ
+   ================================================================ */
+
+/* --- стан мережі --- */
+function netState(){
+  const box = el('statusBox'), txt = el('statusText');
+  if (navigator.onLine){
+    box.classList.remove('off');
+    txt.textContent = APPS.filter(a => !a.nopage).length + ' в ефірі';
+  } else {
+    box.classList.add('off');
+    txt.textContent = 'без мережі · пульт із пам\u2019яті';
+  }
+}
+window.addEventListener('online', netState);
+window.addEventListener('offline', netState);
+netState();
+
+/* --- пропозиція встановити (Chrome, Edge, Android) --- */
+let deferred = null;
+const btnInstall = el('btnInstall');
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferred = e;
+  btnInstall.hidden = false;
+});
+btnInstall.addEventListener('click', async () => {
+  if (!deferred) return;
+  btnInstall.hidden = true;
+  deferred.prompt();
+  await deferred.userChoice;
+  deferred = null;
+});
+window.addEventListener('appinstalled', () => { btnInstall.hidden = true; deferred = null; });
+
+/* --- сервіс-воркер --- */
+if ('serviceWorker' in navigator && location.protocol === 'https:'){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+
+      const offer = worker => {
+        if (!worker) return;
+        const t = el('toast');
+        t.classList.add('show');
+        el('btnUpdate').onclick = () => {
+          worker.postMessage('skip-waiting');
+          t.classList.remove('show');
+        };
+      };
+
+      if (reg.waiting) offer(reg.waiting);
+
+      reg.addEventListener('updatefound', () => {
+        const nw = reg.installing;
+        if (!nw) return;
+        nw.addEventListener('statechange', () => {
+          if (nw.state === 'installed' && navigator.serviceWorker.controller) offer(nw);
+        });
+      });
+
+      /* новий воркер перебрав керування — перезавантажуємо один раз */
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloaded) return;
+        reloaded = true;
+        location.reload();
+      });
+
+      /* перевіряємо оновлення при поверненні до вкладки */
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) reg.update().catch(() => {});
+      });
+
+    }).catch(err => console.warn('[пульт] сервіс-воркер не зареєструвався:', err));
+  });
+}
+</script>
+</body>
+</html>
