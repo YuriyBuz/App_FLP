@@ -1,0 +1,56 @@
+{
+  "name": "Foodline · Пульт додатків",
+  "short_name": "Пульт FL",
+  "description": "Секторна карта всіх виробничих і комерційних додатків Food Line Production.",
+  "lang": "uk",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "id": "/foodline-hub",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#12100E",
+  "theme_color": "#12100E",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Цифровий блокнот QC",
+      "short_name": "Блокнот QC",
+      "url": "../quality-controller-notebook./",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Реєстрація зміни",
+      "short_name": "Реєстрація",
+      "url": "../registration/",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Комерційний пульт",
+      "short_name": "Комерція",
+      "url": "../Commercial-Intelligence-API/",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
